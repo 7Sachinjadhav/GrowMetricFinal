@@ -1,0 +1,518 @@
+/* WealthMetric ProjectionLab Theme - 100% Match to Android Jetpack Compose App */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --app-bg: #F5F3FF;
+    --card-surface: #FFFFFF;
+    --card-surface-variant: #F3E8FF;
+    --card-border: #E9E5F5;
+    --surface-highlight: #EDE9FE;
+
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+
+    --purple-accent: #8B5CF6;
+    --purple-dark: #6D28D9;
+    --purple-light: #C4B5FD;
+    --purple-container: #F3E8FF;
+
+    --indigo-accent: #6366F1;
+    --indigo-dark: #4F46E5;
+    --indigo-light: #818CF8;
+    --indigo-container: #EEF2FF;
+
+    --emerald-primary: #10B981;
+    --emerald-light: #34D399;
+    --emerald-dark: #059669;
+    --emerald-container: #ECFDF5;
+
+    --cyan-accent: #06B6D4;
+    --cyan-container: #CFFAFE;
+
+    --rose-loss: #DC2626;
+    --rose-container: rgba(220, 38, 38, 0.12);
+
+    --dark-button: #0F172A;
+    --dark-button-hover: #1E293B;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+
+    --shadow-soft: 0 4px 20px -2px rgba(109, 40, 217, 0.08);
+    --shadow-card: 0 2px 12px rgba(15, 23, 42, 0.06);
+    --shadow-elevated: 0 8px 30px rgba(109, 40, 217, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--app-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOP APP BAR */
+.top-bar {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--card-border);
+    padding: 14px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.top-bar-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.brand-icon-box {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--purple-dark), var(--indigo-dark));
+    border-radius: var(--radius-sm);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+}
+
+.brand-text h1 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+}
+
+.brand-text p {
+    font-size: 10px;
+    color: var(--purple-dark);
+    font-weight: 700;
+}
+
+/* MAIN VIEW CONTAINER */
+.main-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 20px 16px;
+    flex: 1;
+}
+
+/* STEP BREADCRUMB HEADER */
+.breadcrumb-banner {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-card);
+}
+
+.breadcrumb-tag {
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--purple-dark);
+    letter-spacing: 0.5px;
+    background: var(--purple-container);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.btn-icon-back {
+    background: var(--card-surface-variant);
+    color: var(--purple-dark);
+    border: 1px solid var(--card-border);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-icon-back:hover {
+    background: var(--purple-light);
+}
+
+/* STEP 0: WELCOME LANDING CARD */
+.welcome-hero {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 100%);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-xl);
+    padding: 40px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-elevated);
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--emerald-container);
+    color: var(--emerald-dark);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+.hero-h1 {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.hero-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+}
+
+.btn-dark-primary {
+    background: var(--dark-button);
+    color: #FFFFFF;
+    border: none;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+    transition: all 0.15s ease;
+}
+
+.btn-dark-primary:hover {
+    background: var(--dark-button-hover);
+    transform: translateY(-1px);
+}
+
+/* STEP 1: CATEGORY TAB SELECTOR */
+.plan-category-selector {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-card);
+}
+
+.selector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    background: var(--card-surface-variant);
+    padding: 4px;
+    border-radius: var(--radius-md);
+}
+
+.sel-tab {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.sel-tab.active {
+    background: var(--card-surface);
+    border-color: rgba(139, 92, 246, 0.4);
+    color: var(--purple-dark);
+    box-shadow: 0 2px 8px rgba(109, 40, 217, 0.1);
+}
+
+.sel-tab h4 { font-size: 13px; font-weight: 800; }
+.sel-tab span { font-size: 10px; color: var(--text-muted); }
+
+/* AMC PROVIDER FILTER CHIPS */
+.amc-chips-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.chip-btn {
+    background: var(--card-surface-variant);
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    flex: 1;
+    transition: all 0.2s ease;
+}
+
+.chip-btn.active {
+    background: var(--purple-container);
+    color: var(--purple-dark);
+    border-color: var(--purple-accent);
+}
+
+/* CARDS LIST */
+.cards-column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.item-card {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    box-shadow: var(--shadow-card);
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.item-card:hover {
+    border-color: var(--purple-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+}
+
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.badge-purple { background: var(--purple-container); color: var(--purple-dark); }
+.badge-emerald { background: var(--emerald-container); color: var(--emerald-dark); }
+
+/* STEP 2: FULL-PAGE DETAILED VIEW */
+.live-nav-card {
+    background: var(--app-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+.cagr-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.cagr-card-tile {
+    padding: 10px 6px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.cagr-card-tile p { font-size: 9px; color: var(--text-secondary); margin-bottom: 2px; }
+.cagr-card-tile h4 { font-size: 13px; font-weight: 900; }
+
+.allocation-bar {
+    display: flex;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--card-surface-variant);
+    margin-top: 4px;
+}
+
+/* CANVAS INTERACTIVE GRAPH */
+.graph-container-card {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-card);
+}
+
+.graph-tooltip-banner {
+    background: var(--purple-container);
+    border: 1px solid var(--purple-accent);
+    border-radius: 10px;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--purple-dark);
+    margin-bottom: 10px;
+}
+
+canvas {
+    width: 100%;
+    height: 180px;
+    display: block;
+}
+
+/* HISTORICAL SCHEDULE TABLE */
+.table-card-box {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-card);
+}
+
+.table-scroll-container {
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--card-border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+th {
+    background: var(--card-surface-variant);
+    color: var(--text-primary);
+    font-weight: 800;
+    padding: 6px 10px;
+    text-align: left;
+    position: sticky;
+    top: 0;
+}
+
+td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--text-secondary);
+}
+
+tr:nth-child(even) td { background: var(--app-bg); }
+
+/* STEP 3: CALCULATOR & RESULTS */
+.calc-card-box {
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-card);
+}
+
+.input-row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 640px) {
+    .input-row-grid { grid-template-columns: 1fr; }
+    .cagr-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+.form-field {
+    margin-bottom: 12px;
+}
+
+.form-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.form-input-box {
+    width: 100%;
+    background: var(--app-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.form-input-box:focus {
+    outline: none;
+    border-color: var(--purple-accent);
+}
+
+.result-banner {
+    background: var(--emerald-container);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.result-stat-box {
+    background: var(--app-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.result-stat-box p { font-size: 10px; color: var(--text-secondary); }
+.result-stat-box h2 { font-size: 20px; font-weight: 900; color: var(--emerald-dark); margin-top: 2px; }
+
+/* SPINNER */
+.loader-spin {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--card-border);
+    border-radius: 50%;
+    border-top-color: var(--purple-accent);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

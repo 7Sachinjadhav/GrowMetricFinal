@@ -1,0 +1,19 @@
+# Gradle & Build output
+.gradle/
+build/
+**/build/
+
+# IDE files
+.idea/
+*.iml
+.kotlin/
+
+# Local settings & sensitive keystores
+local.properties
+Keystore.jks/
+*.jks
+*.keystore
+
+# OS generated files
+.DS_Store
+Thumbs.db

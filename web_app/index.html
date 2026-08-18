@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthMetric - Simulate. Plan. Prosper.</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- TOP APP BAR -->
+    <header class="top-bar">
+        <div class="top-bar-container">
+            <div class="brand-title" onclick="navigateStep(0)">
+                <div class="brand-icon-box">WM</div>
+                <div class="brand-text">
+                    <h1>WealthMetric</h1>
+                    <p>Simulate. Plan. Prosper.</p>
+                </div>
+            </div>
+            <span class="hero-pill" style="margin-bottom:0;">💻 ProjectionLab Web Edition</span>
+        </div>
+    </header>
+
+    <!-- MAIN VIEW WRAPPER -->
+    <main class="main-wrapper">
+
+        <!-- STEP 0: WELCOME HERO LANDING PANE -->
+        <div id="pane-welcome" class="step-pane">
+            <div class="welcome-hero">
+                <span class="hero-pill">✨ Next-Gen Retirement & Annuity Simulator</span>
+                <h1 class="hero-h1">Build Financial Plans<br>You Love</h1>
+                <p class="hero-desc">
+                    Explore guaranteed bank pension plans or top mutual fund growth trajectories with real-time MFAPI live NAV integration. Simulate long-term compounding and secure your dream retirement.
+                </p>
+                <button class="btn-dark-primary" onclick="navigateStep(1)">
+                    🚀 Explore Plans & NAV Trajectories
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 1: DUAL PLAN CATEGORY SELECTION PANE -->
+        <div id="pane-selection" class="step-pane" style="display: none;">
+            <div class="breadcrumb-banner">
+                <div>
+                    <span class="breadcrumb-tag">STEP 1 OF 3</span>
+                    <span style="font-size: 12px; color: var(--text-secondary); margin-left: 8px;">• Explore Annuity & Pension Plans</span>
+                </div>
+                <button class="btn-icon-back" onclick="navigateStep(0)">🏠 Home</button>
+            </div>
+
+            <!-- CATEGORY SELECTOR HEADER -->
+            <div class="plan-category-selector">
+                <span style="font-size: 10px; font-weight: 900; color: var(--text-secondary); letter-spacing: 0.5px;">SELECT PLAN TYPE</span>
+                <div class="selector-grid" style="margin-top: 8px;">
+                    <button class="sel-tab active" onclick="setPlanCategory(0)">
+                        <h4>🏦 Bank Pension Plans</h4>
+                        <span>Guaranteed Income Stream</span>
+                    </button>
+                    <button class="sel-tab" onclick="setPlanCategory(1)">
+                        <h4>📈 Mutual Fund Plans</h4>
+                        <span>SBI • ICICI • LIC Funds</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- AMC PROVIDER CHIPS (Shown only for Mutual Fund category) -->
+            <div id="amc-row" class="amc-chips-row" style="display: none;">
+                <button class="chip-btn active" data-amc="SBI" onclick="setAmc('SBI')">SBI Mutual Fund</button>
+                <button class="chip-btn" data-amc="ICICI" onclick="setAmc('ICICI')">ICICI Prudential MF</button>
+                <button class="chip-btn" data-amc="LIC" onclick="setAmc('LIC')">LIC Mutual Fund</button>
+            </div>
+
+            <!-- CARDS LIST COLUMN -->
+            <div id="selection-list-column" class="cards-column"></div>
+        </div>
+
+        <!-- STEP 2: DEDICATED FULL-PAGE NAV & PLAN OVERVIEW PANE -->
+        <div id="pane-info" class="step-pane" style="display: none;">
+            <div id="pane-info-content"></div>
+        </div>
+
+        <!-- STEP 3: RETIREMENT CALCULATOR & RESULTS PANE -->
+        <div id="pane-calculator" class="step-pane" style="display: none;">
+            <div class="breadcrumb-banner">
+                <div>
+                    <span class="breadcrumb-tag">STEP 3 OF 3</span>
+                    <span style="font-size: 12px; color: var(--text-secondary); margin-left: 8px;">• Retirement Calculator & Results</span>
+                </div>
+                <button class="btn-icon-back" onclick="navigateStep(2)">← Back to Plan Info</button>
+            </div>
+
+            <div class="calc-card-box">
+                <h3 style="font-size: 16px; font-weight: 900; margin-bottom: 14px;">⚙️ Retirement Inputs & Assumptions</h3>
+
+                <div class="input-row-grid">
+                    <div class="form-field">
+                        <label for="currentAge">Current Age (Years)</label>
+                        <input id="currentAge" type="number" class="form-input-box" value="35">
+                    </div>
+                    <div class="form-field">
+                        <label for="retirementAge">Target Retirement Age</label>
+                        <input id="retirementAge" type="number" class="form-input-box" value="60">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="currentCorpus">Current Accumulated Corpus (₹)</label>
+                    <input id="currentCorpus" type="number" class="form-input-box" value="2500000">
+                </div>
+
+                <div class="form-field">
+                    <label for="annualSavings">Annual Investment Contribution (₹/Year)</label>
+                    <input id="annualSavings" type="number" class="form-input-box" value="100000">
+                </div>
+
+                <div class="form-field">
+                    <label for="annualExpenditure">Target Annual Expenditure at Retirement (₹)</label>
+                    <input id="annualExpenditure" type="number" class="form-input-box" value="600000">
+                </div>
+
+                <div class="form-field">
+                    <label for="expectedAnnuityRate">Expected Annuity / Return Rate (% p.a.)</label>
+                    <input id="expectedAnnuityRate" type="number" step="0.1" class="form-input-box" value="6.8">
+                </div>
+            </div>
+
+            <!-- PROJECTION RESULTS CONTAINER -->
+            <div id="calc-results-box"></div>
+        </div>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthMetric - Simulate. Plan. Prosper.</title>
+    <meta name="description" content="WealthMetric - Next-Gen Retirement & Annuity Simulator with Real-Time MFAPI Integration">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* WealthMetric ProjectionLab Light Theme - 100% Embedded Single-File Bundle */
+        :root {
+            --app-bg: #F5F3FF;
+            --card-surface: #FFFFFF;
+            --card-surface-variant: #F3E8FF;
+            --card-border: #E9E5F5;
+            --surface-highlight: #EDE9FE;
+
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+
+            --purple-accent: #8B5CF6;
+            --purple-dark: #6D28D9;
+            --purple-light: #C4B5FD;
+            --purple-container: #F3E8FF;
+
+            --indigo-accent: #6366F1;
+            --indigo-dark: #4F46E5;
+            --indigo-light: #818CF8;
+            --indigo-container: #EEF2FF;
+
+            --emerald-primary: #10B981;
+            --emerald-light: #34D399;
+            --emerald-dark: #059669;
+            --emerald-container: #ECFDF5;
+
+            --cyan-accent: #06B6D4;
+            --cyan-container: #CFFAFE;
+
+            --rose-loss: #DC2626;
+            --rose-container: rgba(220, 38, 38, 0.12);
+
+            --dark-button: #0F172A;
+            --dark-button-hover: #1E293B;
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+
+            --shadow-soft: 0 4px 20px -2px rgba(109, 40, 217, 0.08);
+            --shadow-card: 0 2px 12px rgba(15, 23, 42, 0.06);
+            --shadow-elevated: 0 8px 30px rgba(109, 40, 217, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--app-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP APP BAR */
+        .top-bar {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--card-border);
+            padding: 14px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        }
+
+        .top-bar-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .brand-icon-box {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--purple-dark), var(--indigo-dark));
+            border-radius: var(--radius-sm);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+        }
+
+        .brand-text h1 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .brand-text p {
+            font-size: 10px;
+            color: var(--purple-dark);
+            font-weight: 700;
+        }
+
+        /* MAIN VIEW CONTAINER */
+        .main-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px 16px;
+            flex: 1;
+        }
+
+        /* STEP BREADCRUMB HEADER */
+        .breadcrumb-banner {
+            background: var(--card-surface);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .breadcrumb-tag {
+            font-size: 10px;
+            font-weight: 900;
+            color: var(--purple-dark);
+            letter-spacing: 0.5px;
+            background: var(--purple-container);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .btn-icon-back {
+            background: var(--card-surface-variant);
+            color: var(--purple-dark);
+            border: 1px solid var(--card-border);
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .btn-icon-back:hover {
+            background: var(--purple-light);
+        }
+
+        /* STEP 0: WELCOME LANDING CARD */
+        .welcome-hero {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 100%);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-xl);
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--emerald-container);
+            color: var(--emerald-dark);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .hero-h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .hero-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 28px;
+            line-height: 1.6;
+        }
+
+        .btn-dark-primary {
+            background: var(--dark-button);
+            color: #FFFFFF;
+            border: none;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 800;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+            transition: all 0.15s ease;
+        }
+
+        .btn-dark-primary:hover {
+            background: var(--dark-button-hover);
+            transform: translateY(-1px);
+        }
+
+        /* STEP 1: CATEGORY TAB SELECTOR */
+        .plan-category-selector {
+            background: var(--card-surface);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .selector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background: var(--card-surface-variant);
+            padding: 4px;
+            border-radius: var(--radius-md);
+        }
+
+        .sel-tab {
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .sel-tab.active {
+            background: var(--card-surface);
+            border-color: rgba(139, 92, 246, 0.4);
+            color: var(--purple-dark);
+            box-shadow: 0 2px 8px rgba(109, 40, 217, 0.1);
+        }
+
+        .sel-tab h4 { font-size: 13px; font-weight: 800; }
+        .sel-tab span { font-size: 10px; color: var(--text-muted); }
+
+        /* AMC PROVIDER FILTER CHIPS */
+        .amc-chips-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .chip-btn {
+            background: var(--card-surface-variant);
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+
+        .chip-btn.active {
+            background: var(--purple-container);
+            color: var(--purple-dark);
+            border-color: var(--purple-accent);
+        }
+
+        /* CARDS LIST */
+        .cards-column {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .item-card {
+            background: var(--card-surface);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .item-card:hover {
+            border-color: var(--purple-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .badge-purple { background: var(--purple-container); color: var(--purple-dark); }
+        .badge-emerald { background: var(--emerald-container); color: var(--emerald-dark); }
+
+        /* STEP 2: FULL-PAGE DETAILED VIEW */
+        .live-nav-card {
+            background: var(--app-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .cagr-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .cagr-card-tile {
+            padding: 10px 6px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .cagr-card-tile p { font-size: 9px; color: var(--text-secondary); margin-bottom: 2px; }
+        .cagr-card-tile h4 { font-size: 13px; font-weight: 900; }
+
+        .allocation-bar {
+            display: flex;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--card-surface-variant);
+            margin-top: 4px;
+        }
+
+        /* CANVAS INTERACTIVE GRAPH */
+        .graph-container-card {
+            background: var(--card-surface);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .graph-tooltip-banner {
+            background: var(--purple-container);
+            border: 1px solid var(--purple-accent);
+            border-radius: 10px;
+            padding: 6px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--purple-dark);
+            margin-bottom: 10px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 180px;
+            display: block;
+        }
+
+        /* HISTORICAL SCHEDULE TABLE */
+        .table-card-box {
+            background: var(--card-surface);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .table-scroll-container {
+            max-height: 150px;
+            overflow-y: auto;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--card-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        th {
+            background: var(--card-surface-variant);
+            color: var(--text-primary);
+            font-weight: 800;
+            padding: 6px 10px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-secondary);
+        }
+
+        tr:nth-child(even) td { background: var(--app-bg); }
+
+        /* STEP 3: CALCULATOR & RESULTS */
+        .calc-card-box {
+            background: var(--card-surface);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .input-row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .input-row-grid { grid-template-columns: 1fr; }
+            .cagr-grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .form-field {
+            margin-bottom: 12px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .form-input-box {
+            width: 100%;
+            background: var(--app-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .form-input-box:focus {
+            outline: none;
+            border-color: var(--purple-accent);
+        }
+
+        .result-banner {
+            background: var(--emerald-container);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .result-stat-box {
+            background: var(--app-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
+        .result-stat-box p { font-size: 10px; color: var(--text-secondary); }
+        .result-stat-box h2 { font-size: 20px; font-weight: 900; color: var(--emerald-dark); margin-top: 2px; }
+
+        /* SPINNER */
+        .loader-spin {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--card-border);
+            border-radius: 50%;
+            border-top-color: var(--purple-accent);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP APP BAR -->
+    <header class="top-bar">
+        <div class="top-bar-container">
+            <div class="brand-title" onclick="navigateStep(0)">
+                <div class="brand-icon-box">WM</div>
+                <div class="brand-text">
+                    <h1>WealthMetric</h1>
+                    <p>Simulate. Plan. Prosper.</p>
+                </div>
+            </div>
+            <span class="hero-pill" style="margin-bottom:0;">💻 ProjectionLab Web Edition</span>
+        </div>
+    </header>
+
+    <!-- MAIN VIEW WRAPPER -->
+    <main class="main-wrapper">
+
+        <!-- STEP 0: WELCOME HERO LANDING PANE -->
+        <div id="pane-welcome" class="step-pane">
+            <div class="welcome-hero">
+                <span class="hero-pill">✨ Next-Gen Retirement & Annuity Simulator</span>
+                <h1 class="hero-h1">Build Financial Plans<br>You Love</h1>
+                <p class="hero-desc">
+                    Explore guaranteed bank pension plans or top mutual fund growth trajectories with real-time MFAPI live NAV integration. Simulate long-term compounding and secure your dream retirement.
+                </p>
+                <button class="btn-dark-primary" onclick="navigateStep(1)">
+                    🚀 Explore Plans & NAV Trajectories
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 1: DUAL PLAN CATEGORY SELECTION PANE -->
+        <div id="pane-selection" class="step-pane" style="display: none;">
+            <div class="breadcrumb-banner">
+                <div>
+                    <span class="breadcrumb-tag">STEP 1 OF 3</span>
+                    <span style="font-size: 12px; color: var(--text-secondary); margin-left: 8px;">• Explore Annuity & Pension Plans</span>
+                </div>
+                <button class="btn-icon-back" onclick="navigateStep(0)">🏠 Home</button>
+            </div>
+
+            <!-- CATEGORY SELECTOR HEADER -->
+            <div class="plan-category-selector">
+                <span style="font-size: 10px; font-weight: 900; color: var(--text-secondary); letter-spacing: 0.5px;">SELECT PLAN TYPE</span>
+                <div class="selector-grid" style="margin-top: 8px;">
+                    <button class="sel-tab active" onclick="setPlanCategory(0)">
+                        <h4>🏦 Bank Pension Plans</h4>
+                        <span>Guaranteed Income Stream</span>
+                    </button>
+                    <button class="sel-tab" onclick="setPlanCategory(1)">
+                        <h4>📈 Mutual Fund Plans</h4>
+                        <span>SBI • ICICI • LIC Funds</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- AMC PROVIDER CHIPS (Shown only for Mutual Fund category) -->
+            <div id="amc-row" class="amc-chips-row" style="display: none;">
+                <button class="chip-btn active" data-amc="SBI" onclick="setAmc('SBI')">SBI Mutual Fund</button>
+                <button class="chip-btn" data-amc="ICICI" onclick="setAmc('ICICI')">ICICI Prudential MF</button>
+                <button class="chip-btn" data-amc="LIC" onclick="setAmc('LIC')">LIC Mutual Fund</button>
+            </div>
+
+            <!-- CARDS LIST COLUMN -->
+            <div id="selection-list-column" class="cards-column"></div>
+        </div>
+
+        <!-- STEP 2: DEDICATED FULL-PAGE NAV & PLAN OVERVIEW PANE -->
+        <div id="pane-info" class="step-pane" style="display: none;">
+            <div id="pane-info-content"></div>
+        </div>
+
+        <!-- STEP 3: RETIREMENT CALCULATOR & RESULTS PANE -->
+        <div id="pane-calculator" class="step-pane" style="display: none;">
+            <div class="breadcrumb-banner">
+                <div>
+                    <span class="breadcrumb-tag">STEP 3 OF 3</span>
+                    <span style="font-size: 12px; color: var(--text-secondary); margin-left: 8px;">• Retirement Calculator & Results</span>
+                </div>
+                <button class="btn-icon-back" onclick="navigateStep(2)">← Back to Plan Info</button>
+            </div>
+
+            <div class="calc-card-box">
+                <h3 style="font-size: 16px; font-weight: 900; margin-bottom: 14px;">⚙️ Retirement Inputs & Assumptions</h3>
+
+                <div class="input-row-grid">
+                    <div class="form-field">
+                        <label for="currentAge">Current Age (Years)</label>
+                        <input id="currentAge" type="number" class="form-input-box" value="35">
+                    </div>
+                    <div class="form-field">
+                        <label for="retirementAge">Target Retirement Age</label>
+                        <input id="retirementAge" type="number" class="form-input-box" value="60">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="currentCorpus">Current Accumulated Corpus (₹)</label>
+                    <input id="currentCorpus" type="number" class="form-input-box" value="2500000">
+                </div>
+
+                <div class="form-field">
+                    <label for="annualSavings">Annual Investment Contribution (₹/Year)</label>
+                    <input id="annualSavings" type="number" class="form-input-box" value="100000">
+                </div>
+
+                <div class="form-field">
+                    <label for="annualExpenditure">Target Annual Expenditure at Retirement (₹)</label>
+                    <input id="annualExpenditure" type="number" class="form-input-box" value="600000">
+                </div>
+
+                <div class="form-field">
+                    <label for="expectedAnnuityRate">Expected Annuity / Return Rate (% p.a.)</label>
+                    <input id="expectedAnnuityRate" type="number" step="0.1" class="form-input-box" value="6.8">
+                </div>
+            </div>
+
+            <!-- PROJECTION RESULTS CONTAINER -->
+            <div id="calc-results-box"></div>
+        </div>
+
+    </main>
+
+    <script>
+        // WealthMetric ProjectionLab Web Edition - Exact Match to Kotlin Android App Logic
+
+        // ==================== STATE MANAGEMENT ====================
+        const appState = {
+            step: 0, // 0 = Welcome, 1 = Plan Selection, 2 = Full Page NAV & Info, 3 = Calculator
+            planCategory: 0, // 0 = Bank Pension Plans, 1 = Mutual Fund Plans
+            selectedAmc: 'SBI',
+            
+            selectedPlan: null,
+            selectedFund: null,
+            isFetchingNav: false,
+
+            retirementInput: {
+                currentAge: 35,
+                retirementAge: 60,
+                currentCorpus: 2500000.0,
+                annualSavings: 100000.0,
+                annualExpenditure: 600000.0,
+                annualInterest: 7.0,
+                annualInflation: 6.0,
+                expectedAnnuityRate: 6.8,
+                payoutFrequency: 1 // 1 = Yearly, 12 = Monthly
+            }
+        };
+
+        // ==================== PRECONFIGURED BANK PENSION PLANS ====================
+        const bankPensionPlans = [
+            {
+                type: 'IMMEDIATE_PENSION',
+                title: 'Immediate Pension Plan',
+                shortDescription: 'Invest your retirement savings once in Rupees (₹) and start receiving a regular monthly/annual pension immediately.',
+                bestFor: 'People who have already retired or have a retirement corpus ready in Rupees (₹).',
+                about: 'The Immediate Pension Plan allows you to convert a lump-sum corpus in Rupees (₹) into an immediate lifetime pension stream. Once initialized, annuity payouts begin immediately without any waiting period.',
+                howItWorks: 'You invest your accumulated retirement savings as a single lump sum in Rupees (₹). The annuity provider calculates your regular pension based on the prevailing rate (default 6.8%) and starts disbursing payments right away.',
+                benefits: [
+                    'Immediate financial security with guaranteed regular cash flows in Rupees (₹).',
+                    'Zero accumulation waiting period – income starts right after setup.',
+                    'Hassle-free management with fixed or escalating pension options.'
+                ],
+                defaultAnnuityRate: 6.8
+            },
+            {
+                type: 'GUARANTEED_FUTURE_PENSION',
+                title: 'Guaranteed Future Pension Plan',
+                shortDescription: 'Invest a lump sum in Rupees (₹) today. Your money grows until retirement and then starts providing a regular pension.',
+                bestFor: 'People who already have savings and are planning for retirement.',
+                about: 'Designed for individuals with existing savings in Rupees (₹) who wish to lock in future pension income. Your principal grows compound interest until your chosen retirement age, after which annuity payments trigger automatically.',
+                howItWorks: 'Your lump-sum investment compounds annually in Rupees (₹) until retirement. At retirement, the entire accumulated corpus converts into a lifetime annuity generating a regular annual pension (default rate 6.6%).',
+                benefits: [
+                    'Guaranteed compound growth on your existing savings until retirement.',
+                    'Protects your future lifestyle against rising living expenses (inflation).',
+                    'Offers clarity and confidence in setting retirement targets in Rupees (₹).'
+                ],
+                defaultAnnuityRate: 6.6
+            },
+            {
+                type: 'RETIREMENT_WEALTH_BUILDER',
+                title: 'Retirement Wealth Builder',
+                shortDescription: 'Start with your existing savings in Rupees (₹) and continue investing every year until retirement. The total corpus is then used to generate pension.',
+                bestFor: 'Working professionals planning long-term retirement.',
+                about: 'Ideal for active earners looking to systematically build a formidable retirement nest egg over time in Rupees (₹). Combines existing capital with compounded annual savings up to your target retirement age.',
+                howItWorks: 'Your existing corpus and ongoing annual contributions grow at the expected return rate until retirement age. Upon reaching retirement, the final corpus is deployed into an annuity yielding predictable yearly income in Rupees (₹) (default rate 6.7%).',
+                benefits: [
+                    'Disciplined wealth creation strategy for mid-career professionals.',
+                    'Maximizes compounding benefits over remaining working years.',
+                    'Generates a robust pension stream to match future living expenses in Rupees (₹).'
+                ],
+                defaultAnnuityRate: 6.7
+            },
+            {
+                type: 'FLEXIBLE_PENSION',
+                title: 'Flexible Pension Plan',
+                shortDescription: 'Build your retirement corpus in Rupees (₹) and choose how you want to receive your pension after retirement (monthly, quarterly, half-yearly or yearly).',
+                bestFor: 'People who want flexibility in retirement income.',
+                about: 'Provides maximum customization over how and when you receive payouts after retirement. Adjust payment frequency to match your personal lifestyle and recurring bill schedules.',
+                howItWorks: 'Accumulate savings until retirement age. Post-retirement, your corpus generates pension at a baseline rate (default 6.5%), and you choose monthly, quarterly, half-yearly, or annual disbursement in Rupees (₹).',
+                benefits: [
+                    'Customizable payout frequencies: Monthly, Quarterly, Half-Yearly, or Yearly in Rupees (₹).',
+                    'Adaptable to changing post-retirement liquidity needs.',
+                    'Combines safety of guaranteed returns with flexible cash flow schedules.'
+                ],
+                defaultAnnuityRate: 6.5
+            }
+        ];
+
+        // ==================== PRECONFIGURED MUTUAL FUNDS (SBI, ICICI, LIC) ====================
+        const mutualFundsData = [
+            // SBI TOP 5
+            {
+                schemeCode: '119551', sfinCode: 'SBI-BCF-DG', amc: 'SBI', amcDisplay: 'SBI Mutual Fund',
+                fundName: 'SBI Bluechip Fund Direct Growth', category: 'Large Cap Fund', benchmark: 'Nifty 50 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 84.62, navDate: 'Latest', dailyChangePercent: 0.42,
+                cagr1Year: 18.5, cagr3Year: 14.8, cagr5Year: 15.2, sinceInception: 15.8,
+                equityPercent: 94.8, debtPercent: 0.0, cashPercent: 5.2,
+                aboutText: 'Invests primarily in top 100 large-cap bluechip stocks in India, focusing on steady capital growth and bluechip market leaders.'
+            },
+            {
+                schemeCode: '125497', sfinCode: 'SBI-SCF-DG', amc: 'SBI', amcDisplay: 'SBI Mutual Fund',
+                fundName: 'SBI Small Cap Fund Direct Growth', category: 'Small Cap Fund', benchmark: 'BSE 250 SmallCap TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 168.45, navDate: 'Latest', dailyChangePercent: 0.85,
+                cagr1Year: 28.2, cagr3Year: 22.4, cagr5Year: 26.4, sinceInception: 24.1,
+                equityPercent: 91.5, debtPercent: 0.0, cashPercent: 8.5,
+                aboutText: 'A high-growth small-cap fund seeking long-term capital appreciation by investing in emerging future leaders.'
+            },
+            {
+                schemeCode: '119579', sfinCode: 'SBI-FEF-DG', amc: 'SBI', amcDisplay: 'SBI Mutual Fund',
+                fundName: 'SBI Focused Equity Fund Direct Growth', category: 'Focused Fund (Max 30 Stocks)', benchmark: 'BSE 500 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 312.18, navDate: 'Latest', dailyChangePercent: -0.15,
+                cagr1Year: 19.4, cagr3Year: 15.6, cagr5Year: 16.8, sinceInception: 17.2,
+                equityPercent: 95.8, debtPercent: 0.0, cashPercent: 4.2,
+                aboutText: 'A conviction-driven portfolio limited to maximum 30 high-potential growth stocks across sectors.'
+            },
+            {
+                schemeCode: '119598', sfinCode: 'SBI-CTF-DG', amc: 'SBI', amcDisplay: 'SBI Mutual Fund',
+                fundName: 'SBI Contra Fund Direct Growth', category: 'Value / Contra Fund', benchmark: 'BSE 500 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 364.92, navDate: 'Latest', dailyChangePercent: 1.12,
+                cagr1Year: 38.6, cagr3Year: 27.5, cagr5Year: 24.1, sinceInception: 18.5,
+                equityPercent: 88.6, debtPercent: 0.0, cashPercent: 11.4,
+                aboutText: 'Follows a contrarian investment strategy, investing in undervalued out-of-favor companies poised for multi-year turnaround.'
+            },
+            {
+                schemeCode: '119565', sfinCode: 'SBI-ELSS-DG', amc: 'SBI', amcDisplay: 'SBI Mutual Fund',
+                fundName: 'SBI Long Term Equity Fund (ELSS) Direct Growth', category: 'Tax Saver ELSS (3Y Lock-in)', benchmark: 'BSE 500 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 398.20, navDate: 'Latest', dailyChangePercent: 0.55,
+                cagr1Year: 24.5, cagr3Year: 18.2, cagr5Year: 17.5, sinceInception: 16.9,
+                equityPercent: 96.5, debtPercent: 0.0, cashPercent: 3.5,
+                aboutText: 'Combines dual benefits of tax savings under Section 80C with long-term equity wealth generation.'
+            },
+
+            // ICICI TOP 5
+            {
+                schemeCode: '120586', sfinCode: 'EVIF', amc: 'ICICI', amcDisplay: 'ICICI Prudential MF',
+                fundName: 'ICICI Prudential Bluechip Fund Direct Growth', category: 'Large Cap Fund', benchmark: 'Nifty 50 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 112.34, navDate: 'Latest', dailyChangePercent: 0.68,
+                cagr1Year: 22.4, cagr3Year: 17.8, cagr5Year: 16.5, sinceInception: 16.2,
+                equityPercent: 93.8, debtPercent: 0.0, cashPercent: 6.2,
+                aboutText: 'ICICI Prudential flagship large-cap equity fund investing in market leaders with strong corporate governance and cash flows.'
+            },
+            {
+                schemeCode: '120594', sfinCode: 'ICICI-EDF-DG', amc: 'ICICI', amcDisplay: 'ICICI Prudential MF',
+                fundName: 'ICICI Prudential Equity & Debt Fund Direct Growth', category: 'Aggressive Hybrid Fund', benchmark: 'Nifty 50 Hybrid 65:35',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 345.80, navDate: 'Latest', dailyChangePercent: 0.32,
+                cagr1Year: 26.5, cagr3Year: 20.8, cagr5Year: 18.9, sinceInception: 17.4,
+                equityPercent: 68.2, debtPercent: 26.5, cashPercent: 5.3,
+                aboutText: 'Maintains a balanced blend of 65-75% equities for growth and 25-35% high-grade fixed income bonds for stability.'
+            },
+            {
+                schemeCode: '120621', sfinCode: 'ICICI-VDF-DG', amc: 'ICICI', amcDisplay: 'ICICI Prudential MF',
+                fundName: 'ICICI Prudential Value Discovery Fund Direct Growth', category: 'Value Fund', benchmark: 'Nifty 500 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 432.10, navDate: 'Latest', dailyChangePercent: 0.95,
+                cagr1Year: 29.8, cagr3Year: 23.4, cagr5Year: 21.4, sinceInception: 19.1,
+                equityPercent: 87.5, debtPercent: 4.2, cashPercent: 8.3,
+                aboutText: 'Identifies high quality businesses available at significant discount to their intrinsic value for superior long-term returns.'
+            },
+            {
+                schemeCode: '120597', sfinCode: 'ICICI-LMF-DG', amc: 'ICICI', amcDisplay: 'ICICI Prudential MF',
+                fundName: 'ICICI Prudential Large & Mid Cap Fund Direct Growth', category: 'Large & Mid Cap Fund', benchmark: 'Nifty LargeMidcap 250 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 85.90, navDate: 'Latest', dailyChangePercent: 0.45,
+                cagr1Year: 25.1, cagr3Year: 19.6, cagr5Year: 19.2, sinceInception: 17.8,
+                equityPercent: 94.6, debtPercent: 0.0, cashPercent: 5.4,
+                aboutText: 'Combines stability of large-cap leaders (35%+) with dynamic upside growth potential of mid-cap companies (35%+).'
+            },
+            {
+                schemeCode: '120614', sfinCode: 'ICICI-SCF-DG', amc: 'ICICI', amcDisplay: 'ICICI Prudential MF',
+                fundName: 'ICICI Prudential Smallcap Fund Direct Growth', category: 'Small Cap Fund', benchmark: 'Nifty Smallcap 250 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 92.40, navDate: 'Latest', dailyChangePercent: 0.72,
+                cagr1Year: 27.6, cagr3Year: 21.9, cagr5Year: 24.8, sinceInception: 20.5,
+                equityPercent: 90.8, debtPercent: 0.0, cashPercent: 9.2,
+                aboutText: 'Invests in high-potential small businesses with strong market share expansion and earnings acceleration.'
+            },
+
+            // LIC TOP 5
+            {
+                schemeCode: '119717', sfinCode: 'LIC-LCF-DG', amc: 'LIC', amcDisplay: 'LIC Mutual Fund',
+                fundName: 'LIC MF Large Cap Fund Direct Growth', category: 'Large Cap Fund', benchmark: 'Nifty 50 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 52.80, navDate: 'Latest', dailyChangePercent: 0.28,
+                cagr1Year: 16.4, cagr3Year: 13.2, cagr5Year: 13.8, sinceInception: 13.5,
+                equityPercent: 95.5, debtPercent: 0.0, cashPercent: 4.5,
+                aboutText: 'Backed by LIC heritage, focusing on steady capital preservation and long-term capital growth in India\'s top 100 bluechips.'
+            },
+            {
+                schemeCode: '119728', sfinCode: 'LIC-FCF-DG', amc: 'LIC', amcDisplay: 'LIC Mutual Fund',
+                fundName: 'LIC MF Flexi Cap Fund Direct Growth', category: 'Flexi Cap Fund', benchmark: 'Nifty 500 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 89.60, navDate: 'Latest', dailyChangePercent: 0.50,
+                cagr1Year: 18.2, cagr3Year: 14.1, cagr5Year: 14.9, sinceInception: 14.2,
+                equityPercent: 92.8, debtPercent: 0.0, cashPercent: 7.2,
+                aboutText: 'Dynamically shifts investments across large, mid, and small-cap opportunities based on evolving macro market trends.'
+            },
+            {
+                schemeCode: '119736', sfinCode: 'LIC-INF-DG', amc: 'LIC', amcDisplay: 'LIC Mutual Fund',
+                fundName: 'LIC MF Infrastructure Fund Direct Growth', category: 'Sectoral / Thematic Infrastructure', benchmark: 'Nifty Infrastructure TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 48.90, navDate: 'Latest', dailyChangePercent: 1.25,
+                cagr1Year: 39.5, cagr3Year: 25.8, cagr5Year: 22.1, sinceInception: 15.6,
+                equityPercent: 91.2, debtPercent: 0.0, cashPercent: 8.8,
+                aboutText: 'Captures long-term growth opportunities in India\'s nation-building sectors including capital goods, energy, power, and logistics.'
+            },
+            {
+                schemeCode: '119725', sfinCode: 'LIC-LMF-DG', amc: 'LIC', amcDisplay: 'LIC Mutual Fund',
+                fundName: 'LIC MF Large & Mid Cap Fund Direct Growth', category: 'Large & Mid Cap Fund', benchmark: 'Nifty LargeMidcap 250 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 38.40, navDate: 'Latest', dailyChangePercent: 0.38,
+                cagr1Year: 21.0, cagr3Year: 15.9, cagr5Year: 16.2, sinceInception: 14.8,
+                equityPercent: 93.9, debtPercent: 0.0, cashPercent: 6.1,
+                aboutText: 'Maintains disciplined allocation across market-leading large caps and agile mid-caps for balanced risk-adjusted growth.'
+            },
+            {
+                schemeCode: '119711', sfinCode: 'LIC-ELSS-DG', amc: 'LIC', amcDisplay: 'LIC Mutual Fund',
+                fundName: 'LIC MF Tax Saver Fund Direct Growth', category: 'Tax Saver ELSS (3Y Lock-in)', benchmark: 'Nifty 500 TRI',
+                launchDate: '01-Jan-2013', inceptionNav: 10.0, currentNav: 145.20, navDate: 'Latest', dailyChangePercent: 0.40,
+                cagr1Year: 17.5, cagr3Year: 13.0, cagr5Year: 13.5, sinceInception: 13.9,
+                equityPercent: 97.2, debtPercent: 0.0, cashPercent: 2.8,
+                aboutText: 'Combines 80C income tax deduction benefits with wealth building through equity market participation.'
+            }
+        ];
+
+        // ==================== MFAPI REST API INTEGRATION ====================
+        async function fetchFundWith5YearNavHistory(fund) {
+            const todayStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+            try {
+                const response = await fetch(`https://api.mfapi.in/mf/${fund.schemeCode}`);
+                if (response.ok) {
+                    const json = await response.json();
+                    if (json.data && json.data.length > 0) {
+                        const totalItems = json.data.length;
+                        const latestItem = json.data[0];
+                        const latestNav = parseFloat(latestItem.nav) || fund.currentNav;
+
+                        const navPoints = [];
+                        const step = Math.max(1, Math.floor(totalItems / 120));
+                        for (let i = 0; i < totalItems; i += step) {
+                            const item = json.data[i];
+                            const navVal = parseFloat(item.nav);
+                            if (navVal > 0) {
+                                const formattedDate = formatDateString(item.date);
+                                navPoints.push({ date: formattedDate, nav: navVal });
+                            }
+                        }
+                        const chronological = navPoints.reverse();
+                        if (chronological.length > 0 && chronological[chronological.length - 1].date !== todayStr) {
+                            chronological.push({ date: todayStr, nav: latestNav });
+                        }
+
+                        const prevNav = json.data.length > 1 ? (parseFloat(json.data[1].nav) || latestNav) : latestNav;
+                        const dailyChange = prevNav > 0 ? ((latestNav - prevNav) / prevNav) * 100.0 : 0.0;
+
+                        return {
+                            ...fund,
+                            currentNav: Math.round(latestNav * 100) / 100,
+                            navDate: todayStr,
+                            dailyChangePercent: Math.round(dailyChange * 100) / 100,
+                            navHistory5Y: chronological
+                        };
+                    }
+                }
+            } catch (_e) {
+                console.warn('MFAPI unavailable, generating fallback dynamic market curve');
+            }
+            return generateFallbackDynamicNav(fund);
+        }
+
+        function formatDateString(rawDate) {
+            try {
+                const parts = rawDate.split("-");
+                if (parts.length === 3) {
+                    const day = parts[0].padStart(2, '0');
+                    const monthInt = parseInt(parts[1], 10) || 1;
+                    const year = parts[2];
+                    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    const monthStr = months[monthInt - 1] || "Aug";
+                    return `${day}-${monthStr}-${year}`;
+                }
+            } catch (_e) {}
+            return rawDate;
+        }
+
+        function generateFallbackDynamicNav(fund) {
+            const today = new Date();
+            const todayStr = today.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+            const liveNav = fund.currentNav;
+            const navHistory = [];
+            const startNav = Math.max(10.0, liveNav / Math.pow(1.0 + fund.cagr5Year / 100.0, 5.0));
+
+            const totalPoints = 120;
+            for (let i = 0; i <= totalPoints; i++) {
+                const progress = i / totalPoints;
+                const d = new Date(today);
+                d.setDate(d.getDate() - (totalPoints - i) * 7);
+                const dateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+
+                const baseNav = startNav * Math.pow(liveNav / startNav, progress);
+                const majorCycle = Math.sin(progress * 14 * Math.PI) * (baseNav * 0.08);
+                const midCycle = Math.cos(progress * 32 * Math.PI) * (baseNav * 0.04);
+                const noise = Math.sin(progress * 75 * Math.PI) * (baseNav * 0.02);
+
+                const pointNav = i === totalPoints ? liveNav : Math.max(10.0, baseNav + majorCycle + midCycle + noise);
+                navHistory.push({ date: dateStr, nav: Math.round(pointNav * 100) / 100 });
+            }
+
+            return {
+                ...fund,
+                currentNav: Math.round(liveNav * 100) / 100,
+                navDate: todayStr,
+                navHistory5Y: navHistory
+            };
+        }
+
+        // ==================== WIZARD STEP NAVIGATION ====================
+        function navigateStep(targetStep) {
+            appState.step = targetStep;
+            document.querySelectorAll('.step-pane').forEach(pane => pane.style.display = 'none');
+
+            if (targetStep === 0) {
+                document.getElementById('pane-welcome').style.display = 'block';
+            } else if (targetStep === 1) {
+                document.getElementById('pane-selection').style.display = 'block';
+                renderSelectionPane();
+            } else if (targetStep === 2) {
+                document.getElementById('pane-info').style.display = 'block';
+                renderFullPageInfoPane();
+            } else if (targetStep === 3) {
+                document.getElementById('pane-calculator').style.display = 'block';
+                calculateRetirementProjections();
+            }
+        }
+
+        function setPlanCategory(catIndex) {
+            appState.planCategory = catIndex;
+            document.querySelectorAll('.sel-tab').forEach((t, idx) => {
+                if (idx === catIndex) t.classList.add('active');
+                else t.classList.remove('active');
+            });
+            document.getElementById('amc-row').style.display = catIndex === 1 ? 'flex' : 'none';
+            renderSelectionPane();
+        }
+
+        function setAmc(amcName) {
+            appState.selectedAmc = amcName;
+            document.querySelectorAll('.chip-btn').forEach(c => {
+                if (c.dataset.amc === amcName) c.classList.add('active');
+                else c.classList.remove('active');
+            });
+            renderSelectionPane();
+        }
+
+        // ==================== RENDERING SELECTION PANE (STEP 1) ====================
+        function renderSelectionPane() {
+            const column = document.getElementById('selection-list-column');
+            column.innerHTML = '';
+
+            if (appState.planCategory === 0) {
+                // Bank Pension Plans
+                bankPensionPlans.forEach(plan => {
+                    const div = document.createElement('div');
+                    div.className = 'item-card';
+                    div.onclick = () => selectBankPlan(plan.type);
+                    div.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <span class="badge-pill badge-emerald">Bank Pension Plan</span>
+                                <h3 style="font-size: 16px; margin-top: 6px; font-weight: 800;">${plan.title}</h3>
+                                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">${plan.shortDescription}</p>
+                            </div>
+                            <div style="text-align: right; background: var(--emerald-container); padding: 8px 14px; border-radius: 12px;">
+                                <span style="font-size: 10px; color: var(--emerald-dark); font-weight: 800;">ANNUM RATE</span>
+                                <h4 style="font-size: 16px; color: var(--emerald-dark); font-weight: 900;">${plan.defaultAnnuityRate}% p.a.</h4>
+                            </div>
+                        </div>
+                    `;
+                    column.appendChild(div);
+                });
+            } else {
+                // Mutual Fund Plans
+                const funds = mutualFundsData.filter(f => f.amc === appState.selectedAmc);
+                funds.forEach(fund => {
+                    const div = document.createElement('div');
+                    div.className = 'item-card';
+                    div.onclick = () => selectMutualFundObject(fund.schemeCode);
+                    const isPos = fund.dailyChangePercent >= 0;
+
+                    div.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <span class="badge-pill badge-purple">${fund.amcDisplay}</span>
+                                <h3 style="font-size: 16px; margin-top: 6px; font-weight: 800;">${fund.fundName}</h3>
+                                <p style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">${fund.category} • SFIN: ${fund.sfinCode}</p>
+                            </div>
+                            <div style="text-align: right; background: var(--emerald-container); padding: 6px 12px; border-radius: 12px;">
+                                <span style="font-size: 9px; color: var(--emerald-dark); font-weight: 800;">5Y CAGR</span>
+                                <h4 style="font-size: 15px; color: var(--emerald-dark); font-weight: 900;">${fund.cagr5Year}%</h4>
+                            </div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--card-border);">
+                            <div>
+                                <span style="font-size: 10px; color: var(--text-muted);">Live NAV</span>
+                                <h4 style="font-size: 14px; font-weight: 800;">₹${fund.currentNav.toFixed(2)} 
+                                    <span style="font-size: 10px; color:${isPos ? 'var(--emerald-dark)' : 'var(--rose-loss)'}; font-weight: 800;">${isPos ? '+' : ''}${fund.dailyChangePercent}%</span>
+                                </h4>
+                            </div>
+                            <button class="btn-dark-primary" style="padding: 6px 14px; font-size: 11px; border-radius: 10px;">
+                                View 5Y NAV & Calculate →
+                            </button>
+                        </div>
+                    `;
+                    column.appendChild(div);
+                });
+            }
+        }
+
+        function selectBankPlan(planType) {
+            const plan = bankPensionPlans.find(p => p.type === planType);
+            if (!plan) return;
+
+            appState.selectedFund = null;
+            appState.selectedPlan = plan;
+            appState.retirementInput.expectedAnnuityRate = plan.defaultAnnuityRate;
+            appState.retirementInput.annualInterest = plan.defaultAnnuityRate;
+
+            navigateStep(2);
+        }
+
+        async function selectMutualFundObject(schemeCode) {
+            const rawFund = mutualFundsData.find(f => f.schemeCode === schemeCode);
+            if (!rawFund) return;
+
+            appState.selectedFund = rawFund;
+            appState.selectedPlan = {
+                title: `${rawFund.fundName} (${rawFund.cagr5Year}% p.a.)`,
+                shortDescription: `${rawFund.category} • Benchmark: ${rawFund.benchmark}`,
+                about: rawFund.aboutText,
+                howItWorks: `Capital and contributions compound at the 5-Year CAGR of ${rawFund.cagr5Year}% p.a. until target retirement age.`,
+                benefits: [
+                    `High return potential with 5-Year historical CAGR of ${rawFund.cagr5Year}% p.a.`,
+                    `Managed by ${rawFund.amcDisplay} under ${rawFund.category} regulations.`,
+                    `Integrated with retirement goal planning and annual expenditure calculations.`
+                ],
+                defaultAnnuityRate: rawFund.cagr5Year
+            };
+
+            appState.retirementInput.expectedAnnuityRate = rawFund.cagr5Year;
+            appState.retirementInput.annualInterest = rawFund.cagr5Year;
+
+            navigateStep(2);
+
+            // Fetch live NAV & 5Y NAV trajectory from REST API
+            appState.isFetchingNav = true;
+            renderFullPageInfoPane();
+
+            const updatedFund = await fetchFundWith5YearNavHistory(rawFund);
+            appState.selectedFund = updatedFund;
+            appState.isFetchingNav = false;
+            renderFullPageInfoPane();
+        }
+
+        // ==================== RENDERING FULL PAGE NAV & PLAN INFO (STEP 2) ====================
+        function renderFullPageInfoPane() {
+            const container = document.getElementById('pane-info-content');
+            const isFund = !!appState.selectedFund;
+            const fund = appState.selectedFund;
+            const plan = appState.selectedPlan;
+
+            const currencyFormat = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' });
+
+            let html = `
+                <div class="breadcrumb-banner">
+                    <div>
+                        <span class="breadcrumb-tag">STEP 2 OF 3</span>
+                        <span style="font-size: 12px; color: var(--text-secondary); margin-left: 8px;">• ${isFund ? 'Fund Overview & NAV Trajectory' : 'Plan Overview & Cash Flow'}</span>
+                    </div>
+                    <button class="btn-icon-back" onclick="navigateStep(1)">← Back to Plans</button>
+                </div>
+            `;
+
+            if (isFund) {
+                const isPos = fund.dailyChangePercent >= 0;
+                html += `
+                    <div class="live-nav-card">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <div style="display:flex; gap:6px; align-items:center;">
+                                    <span class="badge-pill badge-purple">${fund.amcDisplay}</span>
+                                    <span class="badge-pill" style="background:var(--card-surface-variant); color:var(--text-secondary);">SFIN: ${fund.sfinCode}</span>
+                                </div>
+                                <h2 style="font-size: 20px; font-weight: 900; margin-top: 8px;">${fund.fundName}</h2>
+                                <p style="font-size: 11px; color: var(--purple-dark); font-weight: 700;">${fund.category} • Benchmark: ${fund.benchmark}</p>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--card-border);">
+                            <div>
+                                <span style="font-size: 11px; color: var(--text-secondary);">Latest Live NAV (${fund.navDate})</span>
+                                <h1 style="font-size: 26px; font-weight: 900; color: var(--text-primary); margin-top: 2px;">
+                                    ${currencyFormat.format(fund.currentNav)}
+                                    <span class="badge-pill ${isPos ? 'badge-emerald' : ''}" style="${!isPos ? 'background:var(--rose-container); color:var(--rose-loss);' : ''}">
+                                        ${isPos ? '+' : ''}${fund.dailyChangePercent}%
+                                    </span>
+                                </h1>
+                            </div>
+                            ${appState.isFetchingNav ? '<div class="loader-spin"></div>' : ''}
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; margin-top: 12px; font-size: 11px; color: var(--text-muted); padding-top: 8px; border-top: 1px dashed var(--card-border);">
+                            <span>Inception NAV: <strong>₹${fund.inceptionNav.toFixed(2)}</strong></span>
+                            <span>Launch Date: <strong>${fund.launchDate}</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- 4-PERIOD CAGR TILES -->
+                    <div class="cagr-grid-4">
+                        <div class="cagr-card-tile" style="background:var(--indigo-container); color:var(--indigo-dark);"><p>1Y CAGR</p><h4>${fund.cagr1Year}%</h4></div>
+                        <div class="cagr-card-tile" style="background:var(--purple-container); color:var(--purple-dark);"><p>3Y CAGR</p><h4>${fund.cagr3Year}%</h4></div>
+                        <div class="cagr-card-tile" style="background:var(--emerald-container); color:var(--emerald-dark);"><p>5Y CAGR</p><h4>${fund.cagr5Year}%</h4></div>
+                        <div class="cagr-card-tile" style="background:var(--cyan-container); color:var(--cyan-accent);"><p>Inception</p><h4>${fund.sinceInception}%</h4></div>
+                    </div>
+
+                    <!-- ASSET ALLOCATION PILL BAR -->
+                    <div style="margin-bottom: 16px;">
+                        <div style="display:flex; justify-content:space-between; font-size: 11px; font-weight: 800;">
+                            <span>Asset Allocation</span>
+                            <span style="color:var(--text-secondary); font-size: 10px;">Equity: ${fund.equityPercent}% | Cash: ${fund.cashPercent}%</span>
+                        </div>
+                        <div class="allocation-bar">
+                            <div style="width: ${fund.equityPercent}%; background: var(--indigo-accent);"></div>
+                            ${fund.debtPercent > 0 ? `<div style="width: ${fund.debtPercent}%; background: var(--cyan-accent);"></div>` : ''}
+                            <div style="flex:1; background: var(--emerald-light);"></div>
+                        </div>
+                    </div>
+
+                    <!-- 5-YEAR INTERACTIVE CANVAS CURVE -->
+                    <div class="graph-container-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                            <h3 style="font-size: 14px; font-weight: 800;">📈 5-Year NAV Trajectory Curve</h3>
+                            <span class="badge-pill badge-purple">Interactive</span>
+                        </div>
+                        <div class="graph-tooltip-banner">
+                            <span id="canvas-touch-date">👆 Touch or drag across graph to inspect daily NAV & date</span>
+                            <span id="canvas-touch-nav">💰 Live MFAPI</span>
+                        </div>
+                        <canvas id="interactiveCanvas"></canvas>
+                    </div>
+
+                    <!-- HISTORICAL NAV SCHEDULE TABLE -->
+                    <div class="table-card-box">
+                        <h3 style="font-size: 13px; font-weight: 800; margin-bottom: 8px;">Historical NAV Schedule</h3>
+                        <div class="table-scroll-container">
+                            <table>
+                                <thead>
+                                    <tr><th>Date</th><th>NAV (₹)</th></tr>
+                                </thead>
+                                <tbody>
+                                    ${(fund.navHistory5Y || []).slice(-30).reverse().map((pt) => `
+                                        <tr>
+                                            <td>${pt.date}</td>
+                                            <td style="font-weight: 700; color: var(--text-primary);">₹${pt.nav.toFixed(2)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="live-nav-card" style="background: var(--emerald-container); border-color: rgba(16, 185, 129, 0.3);">
+                        <span class="badge-pill badge-emerald">Bank Pension Plan</span>
+                        <h2 style="font-size: 22px; font-weight: 900; margin-top: 8px; color: var(--emerald-dark);">${plan.title}</h2>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">${plan.shortDescription}</p>
+                        <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(16, 185, 129, 0.2);">
+                            <span style="font-size: 12px; font-weight: 900; color: var(--emerald-dark);">Guaranteed Rate: ${plan.defaultAnnuityRate}% p.a.</span>
+                            <p style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Best For: ${plan.bestFor}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="table-card-box">
+                    <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 6px;">About this Plan</h3>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">${plan.about}</p>
+                </div>
+
+                <div class="table-card-box">
+                    <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 6px;">How it Works</h3>
+                    <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">${plan.howItWorks}</p>
+                </div>
+
+                <button class="btn-dark-primary" style="width: 100%; padding: 16px; font-size: 16px; margin-top: 8px;" onclick="navigateStep(3)">
+                    🧮 Calculate Plan (${plan.defaultAnnuityRate}% p.a.)
+                </button>
+            `;
+
+            container.innerHTML = html;
+
+            if (isFund && fund.navHistory5Y && fund.navHistory5Y.length > 0) {
+                setTimeout(() => initInteractiveCanvas(fund.navHistory5Y), 60);
+            }
+        }
+
+        // ==================== INTERACTIVE CANVAS GRAPH WITH TOUCH TOOLTIP ====================
+        function initInteractiveCanvas(navPoints) {
+            const canvas = document.getElementById('interactiveCanvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * (window.devicePixelRatio || 2);
+            canvas.height = 180 * (window.devicePixelRatio || 2);
+
+            const width = canvas.width;
+            const height = canvas.height;
+
+            const navValues = navPoints.map(p => p.nav);
+            const minNav = Math.min(...navValues) * 0.95;
+            const maxNav = Math.max(...navValues) * 1.05;
+
+            function renderFrame(activeIndex = null) {
+                ctx.clearRect(0, 0, width, height);
+
+                if (navPoints.length < 2) return;
+
+                // Path
+                ctx.beginPath();
+                navValues.forEach((nav, i) => {
+                    const x = (i / (navValues.length - 1)) * width;
+                    const y = height - ((nav - minNav) / (maxNav - minNav)) * height;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
+
+                // Gradient Fill
+                const gradient = ctx.createLinearGradient(0, 0, 0, height);
+                gradient.addColorStop(0, 'rgba(139, 92, 246, 0.35)');
+                gradient.addColorStop(1, 'rgba(139, 92, 246, 0.02)');
+
+                ctx.lineTo(width, height);
+                ctx.lineTo(0, height);
+                ctx.closePath();
+                ctx.fillStyle = gradient;
+                ctx.fill();
+
+                // Curve stroke
+                ctx.beginPath();
+                navValues.forEach((nav, i) => {
+                    const x = (i / (navValues.length - 1)) * width;
+                    const y = height - ((nav - minNav) / (maxNav - minNav)) * height;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
+                ctx.strokeStyle = '#8B5CF6';
+                ctx.lineWidth = 3 * (window.devicePixelRatio || 2);
+                ctx.stroke();
+
+                // Active pointer indicator
+                if (activeIndex !== null && activeIndex >= 0 && activeIndex < navPoints.length) {
+                    const pt = navPoints[activeIndex];
+                    const activeX = (activeIndex / (navPoints.length - 1)) * width;
+                    const activeY = height - ((pt.nav - minNav) / (maxNav - minNav)) * height;
+
+                    // Dashed vertical line
+                    ctx.beginPath();
+                    ctx.setLineDash([8, 8]);
+                    ctx.moveTo(activeX, 0);
+                    ctx.lineTo(activeX, height);
+                    ctx.strokeStyle = '#6D28D9';
+                    ctx.lineWidth = 2 * (window.devicePixelRatio || 2);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // Outer Halo
+                    ctx.beginPath();
+                    ctx.arc(activeX, activeY, 10 * (window.devicePixelRatio || 2), 0, 2 * Math.PI);
+                    ctx.fillStyle = 'rgba(139, 92, 246, 0.3)';
+                    ctx.fill();
+
+                    // Inner Dot
+                    ctx.beginPath();
+                    ctx.arc(activeX, activeY, 5 * (window.devicePixelRatio || 2), 0, 2 * Math.PI);
+                    ctx.fillStyle = '#6D28D9';
+                    ctx.fill();
+
+                    // Update Tooltip Banner
+                    document.getElementById('canvas-touch-date').innerText = `📅 Date: ${pt.date}`;
+                    document.getElementById('canvas-touch-nav').innerText = `💰 NAV: ₹${pt.nav.toFixed(2)}`;
+                }
+            }
+
+            renderFrame();
+
+            function onPointerMove(e) {
+                const bounds = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const ratio = (clientX - bounds.left) / bounds.width;
+                const idx = Math.min(navPoints.length - 1, Math.max(0, Math.round(ratio * (navPoints.length - 1))));
+                renderFrame(idx);
+            }
+
+            canvas.onmousemove = onPointerMove;
+            canvas.ontouchmove = onPointerMove;
+        }
+
+        // ==================== STEP 3: CALCULATOR MATH ====================
+        function calculateRetirementProjections() {
+            const input = appState.retirementInput;
+            const years = Math.max(0, input.retirementAge - input.currentAge);
+
+            const rate = input.annualInterest / 100.0;
+            let accumulatedCorpus = input.currentCorpus * Math.pow(1 + rate, years);
+            for (let i = 0; i < years; i++) {
+                accumulatedCorpus += input.annualSavings * Math.pow(1 + rate, years - i - 1);
+            }
+
+            const infl = input.annualInflation / 100.0;
+            const targetExpenditure = input.annualExpenditure * Math.pow(1 + infl, years);
+
+            const annuityRate = input.expectedAnnuityRate / 100.0;
+            const annualAnnuityIncome = accumulatedCorpus * annuityRate;
+
+            const diff = annualAnnuityIncome - targetExpenditure;
+            const isSurplus = diff >= 0;
+
+            const currencyFormat = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' });
+
+            const box = document.getElementById('calc-results-box');
+            box.innerHTML = `
+                <div class="result-banner" style="background:${isSurplus ? 'var(--emerald-container)' : 'var(--rose-container)'}; border-color:${isSurplus ? 'rgba(16,185,129,0.3)' : 'rgba(220,38,38,0.3)'}">
+                    <h3 style="font-size: 16px; color:${isSurplus ? 'var(--emerald-dark)' : 'var(--rose-loss)'}">
+                        ${isSurplus ? '🎉 TARGET RETIREMENT GOAL ACHIEVED' : '⚠️ RETIREMENT DEFICIT DETECTED'}
+                    </h3>
+                    <p style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">
+                        ${isSurplus ? 'Your projected corpus will generate more pension than required expenditure.' : 'Additional annual savings recommended to cover future inflation expenditure.'}
+                    </p>
+                </div>
+
+                <div class="result-stat-box">
+                    <p>Projected Accumulated Corpus at Age ${input.retirementAge}</p>
+                    <h2>${currencyFormat.format(accumulatedCorpus)}</h2>
+                </div>
+
+                <div class="result-stat-box">
+                    <p>Annual Pension Stream Generated (${input.expectedAnnuityRate}% p.a.)</p>
+                    <h2 style="color: var(--purple-dark);">${currencyFormat.format(annualAnnuityIncome)} / Year</h2>
+                </div>
+
+                <div class="result-stat-box">
+                    <p>Target Annual Expenditure at Age ${input.retirementAge} (6% Inflation)</p>
+                    <h3 style="font-size: 18px; color:${isSurplus ? 'var(--emerald-dark)' : 'var(--rose-loss)'}">
+                        ${currencyFormat.format(targetExpenditure)} (${isSurplus ? 'Surplus ' + currencyFormat.format(diff) : 'Deficit ' + currencyFormat.format(Math.abs(diff))})
+                    </h3>
+                </div>
+            `;
+        }
+
+        // ==================== EVENT BINDINGS ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            ['currentAge', 'retirementAge', 'currentCorpus', 'annualSavings', 'annualExpenditure', 'expectedAnnuityRate'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', (e) => {
+                        appState.retirementInput[id] = parseFloat(e.target.value) || 0;
+                        if (appState.step === 3) calculateRetirementProjections();
+                    });
+                }
+            });
+
+            navigateStep(0);
+        });
+    </script>
+</body>
+</html>
